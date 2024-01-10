@@ -15,6 +15,10 @@ const randomFunc = {
   symbol: getRandomSymbol,
 };
 
+document.addEventListener("DOMContentLoaded", () => {
+  generateDefaultPassword();
+});
+
 function isChecked(element) {
   return element.checked;
 }
@@ -46,6 +50,10 @@ function generatePasswordAndUpdateResult() {
     hasSymbol,
     length
   );
+}
+
+function generateDefaultPassword() {
+  resultEl.textContent = generatePassword(true, true, true, true, 22);
 }
 
 function generatePassword(lower, upper, number, symbol, length) {
@@ -102,5 +110,5 @@ function showTooltip() {
   tooltipEl.style.display = "block";
   setTimeout(() => {
     tooltipEl.style.display = "none";
-  }, 2000); // Adjust the duration as needed
+  }, 2000);
 }

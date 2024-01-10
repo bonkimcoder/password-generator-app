@@ -6,6 +6,7 @@ const numbersEl = document.getElementById("numbers");
 const symbolsEl = document.getElementById("symbols");
 const generateEl = document.getElementById("generate");
 const clipboardEl = document.getElementById("clipboard");
+const tooltipEl = document.getElementById("tooltip");
 
 const randomFunc = {
   lower: getRandomLower,
@@ -14,30 +15,38 @@ const randomFunc = {
   symbol: getRandomSymbol,
 };
 
-clipboardEl.addEventListener("click", () => {
-  const password = resultEl.innerText;
+function isChecked(element) {
+  return element.checked;
+}
+
+clipboardEl.addEventListener("click", copyToClipboard);
+generateEl.addEventListener("click", generatePasswordAndUpdateResult);
+clipboardEl.addEventListener("click", copyToClipboard);
+
+function copyToClipboard() {
+  const password = resultEl.textContent;
   if (!password) {
     return;
   }
   navigator.clipboard.writeText(password);
   alert("Password copied to clipboard!");
-});
+}
 
-generateEl.addEventListener("click", () => {
+function generatePasswordAndUpdateResult() {
   const length = +lengthEl.value;
-  const hasLower = lowercaseEl.checked;
-  const hasUpper = uppercaseEl.checked;
-  const hasNumber = numbersEl.checked;
-  const hasSymbol = symbolsEl.checked;
+  const hasLower = isChecked(lowercaseEl);
+  const hasUpper = isChecked(uppercaseEl);
+  const hasNumber = isChecked(numbersEl);
+  const hasSymbol = isChecked(symbolsEl);
 
-  resultEl.innerText = generatePassword(
+  resultEl.textContent = generatePassword(
     hasLower,
     hasUpper,
     hasNumber,
     hasSymbol,
     length
   );
-});
+}
 
 function generatePassword(lower, upper, number, symbol, length) {
   let generatedPassword = "";
@@ -76,5 +85,22 @@ function getRandomNumber() {
 
 function getRandomSymbol() {
   const symbols = "!@#$%^&*(){}[]=<>/,.";
-  return symbols[Math.floor(Math.random() * symbols.length)];
+  return symbols.charAt(Math.floor(Math.random() * symbols.length));
+}
+
+function copyToClipboard() {
+  const password = resultEl.textContent;
+  if (!password) {
+    return;
+  }
+  navigator.clipboard.writeText(password).then(() => {
+    showTooltip();
+  });
+}
+
+function showTooltip() {
+  tooltipEl.style.display = "block";
+  setTimeout(() => {
+    tooltipEl.style.display = "none";
+  }, 2000); // Adjust the duration as needed
 }

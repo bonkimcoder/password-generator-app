@@ -32,8 +32,13 @@
           id="pass"
           class="break-words flex-grow overflow-y-scroll h-full max-w-full"
         ></span>
-        <button class="w-12 h-12 text-xl" id="clipboard">
+        <button class="relative w-12 h-12 text-xl" id="clipboard">
           <i class="fas fa-clipboard"></i>
+          <span
+            id="tooltip"
+            class="absolute -top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white text-sm p-2 rounded hidden z-10"
+            >Copied!</span
+          >
         </button>
       </div>
 
